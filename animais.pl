@@ -1,126 +1,244 @@
-oi :- nl,
-      write('Mantenha um animal em mente.'),
-      nl,
-      write('Basta responder sim / não às seguintes perguntas:'),
-      nl, nl,
-      guess(Animal),
-      write('Este animal é um'),
-      write(Animal),
-      nl,
-      undo.
+:-style_check(-singleton).
+:- dynamic characteristic/2.
+:- dynamic animals/12.
+:- dynamic clearBase/1.
+:- dynamic clearBase1/1.
+:- dynamic play/0.
+:- dynamic play/1.
+:- dynamic question_carnivore/0.
+:- dynamic question_herbivore/0.
+:- dynamic question_omnivore/0.
+:- dynamic question_fly/0.
+:- dynamic question_4legs/0.
+:- dynamic question_mammals/0.
+:- dynamic question_doenstfly/0.
+:- dynamic question_haslonglegs/0.
+:- dynamic question_manfriend/0.
+:- dynamic question_swims/0.
+:- dynamic question_layeggs/0.
 
-/* hipóteses a serem testadas */
- advinhe(Leão          :- Leão, !.
-adivinhe(veado)        :- veado, !.
-adivinhe(vaca)			:- vaca, !.
-adivinhe (urso)    :- urso,!.
-adivinhe (zebra)   :- zebra,!.
-adivinhe (cavalo)       :- cavalo,!.
-adivinhe (girafa)   :- girafa,!.
-adivinhe (ovelha)   :- ovelha,!.
-adivinhe (coala)    :- coala,!.
-adivinhe (canguru)  :- canguru,!.
-adivinhe (hulhan)   :- hulhan,!.
-adivinhe (esquilo)  :- esquilo,!.
-adivinhe (gorila)   :- gorila,!.
-adivinhe (baleia)   :- baleia,!.
-adivinhe (golfinho)  :- golfinho,!.
-adivinhe (morse)      :- morsa,!.
-adivinhe (peixe-foca)  :- peixe-foca,!.
-adivinhe (shimpanzee)  :- shimpanzee,!.
-adivinhe (mouse)       :- mouse,!.
-adivinhe (gato)         :- gato,!.
-adivinhe (humano)      :- humano,!.
-adivinhe (sahin)        :- sahin,!.
-adivinhe (coruja)      :- coruja,!.
-adivinhe (pombo)        :- pomba,!.
-adivinhe (pinguim)        :- pinguim,!.
-adivinhe (avestruz)       :- avestruz,!.
-adivinhe (frango)         :- frango,!.
-adivinhe (salamandra)     :- salamandra,!.
-adivinhe (sapo)           :- sapo,!.
-adivinhe (crocodilo)      :- crocodilo,!.
-adivinhe (jacaré)         :- jacaré,!.
-adivinhe (tartaruga)      :- tartaruga,!.
-adivinhe (cobra)          :- cobra,!.
-adivinhe (lagarto)        :- lagarto,!.
-adivinhe (cação)         :- cação,!.
-adivinhe (desconhecido).
+%symbolic fact 
+characteristic(nothing, y_n).
 
-/ * regras de identificação de animais * /
-leão :- mamífero, carnívoro, verifique ().
-vaca :- sangue quente, mamífero, herbívoro, tem cascos, verifique (chifre).
-cervo :- hot_blooded, mamífero, herbívoro, verifique (boca).
-Urso :- sangue quente, mamífero, carnívoro, marrom.
-zebra :- de sangue quente, mamífero, herbívoro, com cascos, verifique (listrada preta).
-cavalo :- sangue quente, mamífero, herbívoro, com cascos, verificar (.
-Girafa :- sangue quente, mamífero, herbívoro, com cascos, verifique (pescoço longo).
-ovelha :- sangue quente, mamífero, herbívoro, com cascos.
-coala :- sangue quente, mamífero, herbívoro, marsupial, verifique (árvores_yashar).
-canguru :- sangue quente, mamífero, herbívoro, marsupial, zips.
-esquilo :- sangue quente, mamífero, herbívoro, verifique (olho).
-gorila :- sangue quente, mamífero, herbívoro.
-baleia :- sangue quente, mamífero, em condições de navegar, nadador, verifique ().
-golfinho :  sangue quente, mamífero, gaivota, nadador, verifique (bico).
-Peixe-porco :- sangue quente, mamífero, apto para o mar, rosto.
-peixes-foca :- peixe, quente, mamífero, em condições de navegar.
-shimpanzee :- sangue quente, mamífero, cauda, ​​marrom, verificar (adora banana).
-Ratinho :- sangue quente, mamífero, cauda, ​​marrom.
-Gato :- sangue quente, carnívoro, mamífero, cauda, ​​verifique (miados).
-cão :- sangue quente, carnívoro, mamífero, cauda, ​​nadador.
-humano :- sangue quente, mamífero, nadador.
-sahin :- sangue quente, desperta, caça, verifica (tem asas_ longas).
-Coruja :- sangue quente, despertar, caçar.
-pinguim :- de sangue quente, flutuante, verifique (Antarcticada_yashiyor).
-avestruz :- de sangue quente, verifique (tenha pescoço e pernas compridos).
-Frango :- sangue quente.
-salamandra :- anfíbio, cauda.
-bolsa preta :- anfíbio, verifique (suspiroilli_kuru_derisi_var).
-Sapo :- anfíbio, float, zips.
-jacaré :- surungen, nadar, guclu_chene.
-Tartaruga :- surge, sem concha, nadada.
-cobra :- surungen, verifique ().
-lagarto :- surungen.
-Serpente :- peixe, verifique (tenha um corpo como um peixe comprido).
+clearBase(X):- clearBase1(X), fail.
+  clearBase(X).
+clearBase1(X):- retract(X).
+  clearBase1(X).
 
-/ * classificação * /
-carnívoro :- verificar (alimentar_ com outros animais).
-sangue quente :- verifique (sangue quente).
-mamífero :- verificar (comida).
-herbívoro :- verificar (olhar).
-anfíbio :- verificar (cor).
-peixes :- verificar (se nada).
-cauda :- verificar (tamanho).
-com cascos :- verificar (ter cascos).
-marsupial  :- verificar (sua prole no_bonito).
-shell :- verificar (desconhecido).
+% Main cast 
+% Name, Carnivore, Herbivore, Omnivore, Fly, 4Legs, Mammals, DoenstFly, HasLongLegs, ManFriends, Swims, LayEggs 
+
+animals('Pato', y, n, n, y, n, n, n, n, n, n, y, n). 
+animals('Cachorro', y, n, y, n, y, y, y, n, y, y, n).
+animals('Leao', y, n, n, n, y, y, y, n, n, y, n). 
+animals('Tigre', y, n, n, n, y, y, y, n, n, y, n). 
+animals('Pinguim', y, n, n, n, n, n, y, n, n, y, n). 
+animals('Gato', y, n, y, n, y, y, y, n, n, y, n). 
+animals('Abelha', n, y, n, y, y, n, n, n, n, n, y). 
+animals('Porco', n, n, y, n, y, y, y, n, n, n, n). 
+animals('Girafa', n, y, n, n, y, y, y, y, n, n, n).
+animals('Elefante', n, y, n, n, y, y, y, n, n, n, n). 
+
+play :-
+  clearBase(characteristic(characteristic, Yn)),
+  nl, write('Bem vindo ao Jogo dos Animais!'), nl, nl,
+  question_carnivore.
+
+play(y) :-
+  play.
+
+play(n) :-
+  nl, write('Obrigada por jogar o jogo dos animais!'), nl, nl, !.
+
+new_round :-
+  nl, nl, write('Você gostaria de jogar novamente (y/n)?'),
+      read(Desire),
+      play(Desire).
+
+question_carnivore :-
+  write('O seu animal come carne(y/n)? '),
+  read(AnswerCarnivore),
+  asserta(characteristic(carnivore, AnswerCarnivore)),
+  characteristic(carnivore, CarnivoreQuery),
+  findall(X, animals(X, CarnivoreQuery, _, _, _, _, _, _, _, _, _, _, _), L),
+  length(L, N), N == 1, 
+  animals(Z, CarnivoreQuery, _, _, _, _, _, _, _, _, _, _, _), 
+  write(' Hmm... Acho que...'), write(Z), write('!'), new_round;
+  question_herbivore.
 
 
-
-ask(Question) :-
-    write('Animal '),
-    write(Question),
-    write(' mi? '),
-    read(Response),
-    nl,
-    ( (Response == yes ; Response == y)
-      ->
-      assert(yes(Question)) ;
-       assert(no(Question)), fail).
-
-:- dynamic yes/1,no/1.
+  question_herbivore :-
+    write('O seu animal é Herbívoro(y/n)?'),
+    read(AnswerHerbivore),
+    asserta(characteristic(herbivore, AnswerHerbivore)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, _, _, _, _, _, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, _, _, _, _, _, _, _, _, _),
+    write('Hmm ... Acho que...'), write(Z), write('!'), new_round;
+    question_omnivore.
 
 
-verify(S) :-
-   (yes(S) 
-    ->
-    true ;
-    (no(S)
-     ->
-     fail ;
-     ask(S))).
+  question_omnivore :-
+    write('O seu animal é Onĩvoro(y/n)?'),
+    read(AnswerOmnivore),
+    asserta(characteristic(Omnivore, AnswerOmnivore)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery, _, _, _, _, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery, _, _, _, _, _, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_fly.
 
 
-undo :- retract(yes(_)),fail. 
-undo :- retract(no(_)),fail.
-undo.
+question_fly :-
+    write('O seu animal sabe voar (y/n)?'),
+    read(AnswerFly),
+    asserta(characteristic(Fly, AnswerFly)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, _, _, _, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, _, _, _, _, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_4legs.
+
+
+question_4legs :-
+    write('O seu animal tem 4 pernas (y/n)?'),
+    read(Answer4Legs),
+    asserta(characteristic(4legs, Answer4Legs)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, _, _, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, _, _, _, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_mammals.
+
+
+
+
+question_mammals :-
+    write('O seu animal tem pelos no corpo (y/n)?'),
+    read(AnswerMammals),
+    asserta(characteristic(mammals, AnswerMammals)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, _, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, _, _, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_doenstfly.
+
+
+question_doenstfly :-
+    write('O seu animal não voa (y/n)?'),
+    read(AnswerDoenstfly),
+    asserta(characteristic(doenstfly, AnswerDoenstfly)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    characteristic(doenstfly, DoenstflyQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_haslonglegs.
+
+
+
+question_haslonglegs :-
+    write('O seu animal tem pernas longas (y/n)?'),
+    read(AnswerHaslonglegs),
+    asserta(characteristic(haslonglegs, AnswerHaslonglegs)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    characteristic(doenstfly, DoenstflyQuery),
+    characteristic(haslonglegs, HaslonglegsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery, _, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery, _, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_manfriend.
+
+
+question_manfriend :-
+    write('O seu animal é considerado amigo do homem (y/n)?'),
+    read(AnswerManfriend),
+    asserta(characteristic(manfriend, AnswerManfriend)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    characteristic(doenstfly, DoenstflyQuery),
+    characteristic(haslonglegs, HaslonglegsQuery),
+     characteristic(manfriend, ManfriendQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, _, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, _, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_swims.
+
+
+question_swims:-
+    write('O seu animal sabe nadar (y/n)?'),
+    read(AnswerSwims),
+    asserta(characteristic(swims, AnswerSwims)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    characteristic(doenstfly, DoenstflyQuery),
+    characteristic(haslonglegs, HaslonglegsQuery),
+    characteristic(manfriend, ManfriendQuery),
+    characteristic(swims, SwimsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery,SwimsQuery, _),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, SwimsQuery, _),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    question_layeggs.
+
+question_layeggs:-
+    write('O seu animal põe ovos (y/n)?'),
+    read(AnswerLayeggs),
+    asserta(characteristic(layeggs, AnswerLayeggs)),
+    characteristic(carnivore, CarnivoreQuery),
+    characteristic(herbivore, HerbivoreQuery),
+    characteristic(omnivore, OmnivoeQuery),
+    characteristic(fly, FlyQuery),
+    characteristic(4legs, 4LegsQuery),
+    characteristic(mammals, MammalsQuery),
+    characteristic(doenstfly, DoenstflyQuery),
+    characteristic(haslonglegs, HaslonglegsQuery),
+    characteristic(manfriend, ManfriendQuery),
+    characteristic(swims, SwimsQuery),
+    characteristic(layeggs, LayeggsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery,SwimsQuery, LayeggsQuery),L),
+    length(L, N), N == 1,
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, SwimsQuery, LayeggsQuery),
+    write('Humm...Acho que...'), write(Z), write('!'), new_round;
+    write('Arghhh!!! Não!!!'), new_round.
