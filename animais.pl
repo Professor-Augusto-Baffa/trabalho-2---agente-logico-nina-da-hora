@@ -17,6 +17,17 @@
 :- dynamic question_swims/0.
 :- dynamic question_layeggs/0.
 
+
+%Presentation
+presentation:-write('    _    _   _           _                _       __  __                  _ \n'),
+              write('   /_\\  | |_(_)_ _  __ _| |_ ___ _ _   __| |___  |  \\/  |__ _ _ ___ _____| |\n'),
+              write('  / _ \\ | / / |   \\/ _` |  _/ _ \\  _| / _` / -_) | |\\/| / _` |  _\\ V / -_) |\n'),
+              write(' /_/ \\_\\|_\\_\\_|_||_\\__,_|\\__\\___/_|   \\__,_\\___| |_|  |_\\__,_|_|  \\_/\\___|_|\n'),
+              write('===========================================================================\n'),
+              write('                   ¡Bem vindo ao Game dos Animais!\n'),
+              write('===========================================================================\n\n').
+
+
 %symbolic fact 
 characteristic(nothing, y_n).
 
@@ -28,7 +39,7 @@ clearBase1(X):- retract(X).
 % Main cast 
 % Name, Carnivore, Herbivore, Omnivore, Fly, Legs, Mammals, DoenstFly, HasLongLegs, ManFriends, Swims, LayEggs 
 
-animals('Pato', y, n, n, y, n, n, n, n, n, n, y, n). 
+animals('Pato', y, n, n, y, n, n, n, n, n, n, y, n). % ------- 7
 animals('Cachorro', y, n, y, n, y, y, y, n, y, y, n).
 animals('Leao', y, n, n, n, y, y, y, n, n, y, n). 
 animals('Tigre', y, n, n, n, y, y, y, n, n, y, n). 
@@ -44,7 +55,7 @@ animals('Passaro', n, y, y, y, y, y, y, n, n, n, n).
 play :-
   clearBase(characteristic(characteristic, Yn)),
   nl, write('Bem vindo ao Jogo dos Animais!'), nl, nl,
-  question_carnivore.
+  question_herbivore.
 
 play(y) :-
   play.
