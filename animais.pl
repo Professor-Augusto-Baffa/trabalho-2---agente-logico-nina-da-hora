@@ -9,10 +9,10 @@
 :- dynamic question_herbivore/0.
 :- dynamic question_omnivore/0.
 :- dynamic question_fly/0.
-:- dynamic question_4legs/0.
+:- dynamic question_Legs/0.
 :- dynamic question_mammals/0.
 :- dynamic question_doenstfly/0.
-:- dynamic question_haslonglegs/0.
+:- dynamic question_haslongLegs/0.
 :- dynamic question_manfriend/0.
 :- dynamic question_swims/0.
 :- dynamic question_layeggs/0.
@@ -26,7 +26,7 @@ clearBase1(X):- retract(X).
   clearBase1(X).
 
 % Main cast 
-% Name, Carnivore, Herbivore, Omnivore, Fly, 4Legs, Mammals, DoenstFly, HasLongLegs, ManFriends, Swims, LayEggs 
+% Name, Carnivore, Herbivore, Omnivore, Fly, Legs, Mammals, DoenstFly, HasLongLegs, ManFriends, Swims, LayEggs 
 
 animals('Pato', y, n, n, y, n, n, n, n, n, n, y, n). 
 animals('Cachorro', y, n, y, n, y, y, y, n, y, y, n).
@@ -38,6 +38,8 @@ animals('Abelha', n, y, n, y, y, n, n, n, n, n, y).
 animals('Porco', n, n, y, n, y, y, y, n, n, n, n). 
 animals('Girafa', n, y, n, n, y, y, y, y, n, n, n).
 animals('Elefante', n, y, n, n, y, y, y, n, n, n, n). 
+animals('Passaro', n, y, y, y, y, y, y, n, n, n, n). 
+
 
 play :-
   clearBase(characteristic(characteristic, Yn)),
@@ -56,7 +58,7 @@ new_round :-
       play(Desire).
 
 question_carnivore :-
-  write('O seu animal come carne(y/n)? '),
+  write('O seu animal come carne (y/n)? '),
   read(AnswerCarnivore),
   asserta(characteristic(carnivore, AnswerCarnivore)),
   characteristic(carnivore, CarnivoreQuery),
@@ -106,24 +108,23 @@ question_fly :-
     length(L, N), N == 1,
     animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, _, _, _, _, _, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
-    question_4legs.
+    question_Legs.
 
 
-question_4legs :-
+question_Legs :-
     write('O seu animal tem 4 pernas (y/n)?'),
-    read(Answer4Legs),
-    asserta(characteristic(4legs, Answer4Legs)),
+    read(AnswerLegs),
+    asserta(characteristic(Legs, AnswerLegs)),
     characteristic(carnivore, CarnivoreQuery),
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, _, _, _, _, _, _),L),
+    characteristic(Legs, LegsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, _, _, _, _, _, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, _, _, _, _, _, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, _, _, _, _, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     question_mammals.
-
 
 
 
@@ -135,11 +136,11 @@ question_mammals :-
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, _, _, _, _, _),L),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, _, _, _, _, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, _, _, _, _, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, _, _, _, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     question_doenstfly.
 
@@ -152,32 +153,32 @@ question_doenstfly :-
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
     characteristic(doenstfly, DoenstflyQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),L),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery, _, _, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
-    question_haslonglegs.
+    question_haslongLegs.
 
 
 
-question_haslonglegs :-
+question_haslongLegs :-
     write('O seu animal tem pernas longas (y/n)?'),
-    read(AnswerHaslonglegs),
-    asserta(characteristic(haslonglegs, AnswerHaslonglegs)),
+    read(AnswerHaslongLegs),
+    asserta(characteristic(haslongLegs, AnswerHaslongLegs)),
     characteristic(carnivore, CarnivoreQuery),
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
     characteristic(doenstfly, DoenstflyQuery),
-    characteristic(haslonglegs, HaslonglegsQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery, _, _, _),L),
+    characteristic(haslongLegs, HaslongLegsQuery),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery, _, _, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery, _, _, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery, _, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     question_manfriend.
 
@@ -190,14 +191,14 @@ question_manfriend :-
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
     characteristic(doenstfly, DoenstflyQuery),
-    characteristic(haslonglegs, HaslonglegsQuery),
+    characteristic(haslongLegs, HaslongLegsQuery),
      characteristic(manfriend, ManfriendQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, _, _),L),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery, _, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, _, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery, _, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     question_swims.
 
@@ -210,15 +211,15 @@ question_swims:-
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
     characteristic(doenstfly, DoenstflyQuery),
-    characteristic(haslonglegs, HaslonglegsQuery),
+    characteristic(haslongLegs, HaslongLegsQuery),
     characteristic(manfriend, ManfriendQuery),
     characteristic(swims, SwimsQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery,SwimsQuery, _),L),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery,SwimsQuery, _),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, SwimsQuery, _),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery, SwimsQuery, _),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     question_layeggs.
 
@@ -230,15 +231,15 @@ question_layeggs:-
     characteristic(herbivore, HerbivoreQuery),
     characteristic(omnivore, OmnivoeQuery),
     characteristic(fly, FlyQuery),
-    characteristic(4legs, 4LegsQuery),
+    characteristic(Legs, LegsQuery),
     characteristic(mammals, MammalsQuery),
     characteristic(doenstfly, DoenstflyQuery),
-    characteristic(haslonglegs, HaslonglegsQuery),
+    characteristic(haslongLegs, HaslongLegsQuery),
     characteristic(manfriend, ManfriendQuery),
     characteristic(swims, SwimsQuery),
     characteristic(layeggs, LayeggsQuery),
-    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery,SwimsQuery, LayeggsQuery),L),
+    findall(X, animals(X, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery,SwimsQuery, LayeggsQuery),L),
     length(L, N), N == 1,
-    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery, 4LegsQuery, MammalsQuery, DoenstflyQuery,HaslonglegsQuery,ManfriendQuery, SwimsQuery, LayeggsQuery),
+    animals(Z, CarnivoreQuery, HerbivoreQuery, OmnivoeQuery,FlyQuery,LegsQuery, MammalsQuery, DoenstflyQuery,HaslongLegsQuery,ManfriendQuery, SwimsQuery, LayeggsQuery),
     write('Humm...Acho que...'), write(Z), write('!'), new_round;
     write('Arghhh!!! Não!!!'), new_round.
